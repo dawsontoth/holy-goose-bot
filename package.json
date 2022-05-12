@@ -4,7 +4,8 @@
   "license": "none",
   "dependencies": {
     "@nlpjs/basic": "^4.23.5",
-    "@slack/bolt": "^3.11.0"
+    "@slack/bolt": "^3.11.0",
+    "wakeonlan": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.11.2",

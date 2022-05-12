@@ -1,55 +1,6 @@
 {
   "name": "Corpus",
   "locale": "en-US",
-  "entities": {
-    "computer": {
-      "options": {
-        "Stream-Rig": [
-          "stream",
-          "streaming",
-          "streamer",
-          "stream-rig"
-        ],
-        "Sound-Rig": [
-          "audio",
-          "audio-rig",
-          "sound",
-          "sounds",
-          "sound-rig"
-        ],
-        "Lighting-Rig": [
-          "light",
-          "light-rig",
-          "lights",
-          "lights-rig",
-          "lighting",
-          "lighting-rig"
-        ],
-        "IMAG-Rig": [
-          "imag-rig",
-          "imag",
-          "projection",
-          "slides",
-          "prop",
-          "propresenter",
-          "resolume",
-          "pc",
-          "mac",
-          "mini",
-          "macmini",
-          "mac-mini"
-        ],
-        "Chapel-Rig": [
-          "chapel-rig",
-          "chapel"
-        ],
-        "Kid-Rig": [
-          "kid-rig",
-          "kid"
-        ]
-      }
-    }
-  },
   "data": [
     {
       "intent": "computer.power",
@@ -951,6 +902,17 @@
       "answers": [
         "I probably won't be able to give you the correct answer right away",
         "I'm not sure I'll have the best answer, but I'll try"
+      ]
+    },
+    {
+      "intent": "user.spirit",
+      "utterances": [
+        "Do you have the Holy Spirit power within you",
+        "are you the holy spirit",
+        "do you have the holy spirit"
+      ],
+      "answers": [
+        "I am but a dirty reflection of my father"
       ]
     },
     {

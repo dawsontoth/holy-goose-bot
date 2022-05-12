@@ -1,4 +1,5 @@
 import { App, SayFn } from '@slack/bolt';
+import { turnOn } from './computer';
 import { appToken, signingSecret, token } from './env';
 import { parseMessage } from './parsing';
 
@@ -33,22 +34,7 @@ app.event('app_mention', async ({ event, context, client, say }) => {
 async function handleMessage(message: string, say: SayFn) {
   const response = await parseMessage(message);
   if (response.intent === 'computer.power') {
-    // TODO: Need to send WOL packet.
-    // TODO: It would be nice if these weren't hard coded, huh?
-    switch (response.entities?.[0]?.option) {
-      case 'Stream-Rig':
-        break;
-      case 'Sound-Rig':
-        break;
-      case 'Lighting-Rig':
-        break;
-      case 'IMAG-Rig':
-        break;
-      case 'Chapel-Rig':
-        break;
-      case 'Kid-Rig':
-        break;
-    }
+    await turnOn(response.entities?.[0]?.option);
   }
   await say(response.answer);
 }
