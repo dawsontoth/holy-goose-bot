@@ -6,6 +6,8 @@ services:
       context: ./
       target: production
     working_dir: /app
-    ports:
-      - '1883:1883'
     command: node build/index.js
+    environment:
+      SLACK_BOT_TOKEN: '${SLACK_BOT_TOKEN}'
+      SLACK_SIGNING_SECRET: '${SLACK_SIGNING_SECRET}'
+      SLACK_APP_TOKEN: '${SLACK_APP_TOKEN}'
