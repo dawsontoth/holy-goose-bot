@@ -41,6 +41,17 @@ async function handleMessage(message: string, say: SayFn) {
   const response = await parseMessage(message);
   await say(response.answer);
   switch (response.intent) {
+    case 'agent.canyouhelp':
+      await say(
+        'Here are some helpful commands:\n\n' +
+          [
+            '- turn on {computer name}',
+            '- please list computers',
+            '- please set computer {computer name} {mac address}',
+            '- please remove computer {computer name}',
+          ].join('\n')
+      );
+      break;
     case 'computer.power':
       const macAddress = await findMacAddress(response.entities?.[0]?.option);
       if (macAddress) {
