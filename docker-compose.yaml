@@ -1,6 +1,20 @@
 version: '3.8'
 services:
+  database:
+    container_name: mongo
+    image: mongo:bionic
+    volumes:
+      - db:/data/db
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${MONGO_USERNAME}'
+      MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASSWORD}'
   nodejs:
+    container_name: nodejs
+    depends_on:
+      - mongodb
     restart: unless-stopped
     build:
       context: ./
@@ -11,3 +25,7 @@ services:
       SLACK_BOT_TOKEN: '${SLACK_BOT_TOKEN}'
       SLACK_SIGNING_SECRET: '${SLACK_SIGNING_SECRET}'
       SLACK_APP_TOKEN: '${SLACK_APP_TOKEN}'
+      MONGO_USERNAME: '${MONGO_USERNAME}'
+      MONGO_PASSWORD: '${MONGO_PASSWORD}'
+volumes:
+  db:

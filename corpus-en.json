@@ -3,6 +3,33 @@
   "locale": "en-US",
   "data": [
     {
+      "intent": "computer.list",
+      "utterances": [
+        "please list computers"
+      ],
+      "answers": [
+        "Here they are:"
+      ]
+    },
+    {
+      "intent": "computer.set",
+      "utterances": [
+        "please set computer"
+      ],
+      "answers": [
+        "Set. Restarting parser..."
+      ]
+    },
+    {
+      "intent": "computer.remove",
+      "utterances": [
+        "please remove computer @computer"
+      ],
+      "answers": [
+        "Removed {{ entities.computer.option }}. Restarting parser..."
+      ]
+    },
+    {
       "intent": "computer.power",
       "utterances": [
         "can you turn on @computer?",

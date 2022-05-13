@@ -1,7 +1,13 @@
 import { App, SayFn } from '@slack/bolt';
 import { turnOn } from './computer';
+import {
+  findComputers,
+  findMacAddress,
+  removeComputer,
+  setComputer,
+} from './db';
 import { appToken, signingSecret, token } from './env';
-import { parseMessage } from './parsing';
+import { parseMessage, startParser } from './parsing';
 
 const app = new App({
   token,
@@ -16,7 +22,6 @@ app.error(async error => {
 });
 
 app.message(/.+/, async ({ message, say }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const text = (message as any)?.text;
   if (text) {
     await handleMessage(text, say);
@@ -32,11 +37,35 @@ app.event('app_mention', async ({ event, context, client, say }) => {
 });
 
 async function handleMessage(message: string, say: SayFn) {
+  const parts = message.split(' ');
   const response = await parseMessage(message);
-  if (response.intent === 'computer.power') {
-    await turnOn(response.entities?.[0]?.option);
-  }
   await say(response.answer);
+  switch (response.intent) {
+    case 'computer.power':
+      const macAddress = await findMacAddress(response.entities?.[0]?.option);
+      if (macAddress) {
+        await turnOn(macAddress);
+      } else {
+        await say('Could not find a mac address for that computer!');
+      }
+      break;
+    case 'computer.list':
+      await say(
+        '```' + JSON.stringify(await findComputers(), null, '\t') + '```'
+      );
+      break;
+    case 'computer.set':
+      const name = parts[3];
+      const mac = parts[4];
+      await setComputer(name, mac);
+      await startParser();
+      break;
+    case 'computer.remove':
+      const computer = parts[3];
+      await removeComputer(computer);
+      await startParser();
+      break;
+  }
 }
 
 export async function connectToSlack() {

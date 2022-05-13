@@ -1,13 +1,22 @@
 import { dockStart } from '@nlpjs/basic';
-import { computerOptions } from './computer';
+import { findComputerOptions } from './db';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let nlp: any;
+let nlp: {
+  addEntities;
+  train;
+  process: (
+    language: string,
+    message: string
+  ) => { intent: string; answer: string; entities };
+};
 
-export async function prepareParser() {
+export async function startParser() {
   const dock = await dockStart();
   nlp = dock.get('nlp');
-  nlp.addEntities({ computer: { options: computerOptions } }, 'en-US');
+  nlp.addEntities(
+    { computer: { options: await findComputerOptions() } },
+    'en-US'
+  );
   await nlp.train();
 }
 
