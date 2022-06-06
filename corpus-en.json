@@ -3,6 +3,20 @@
   "locale": "en-US",
   "data": [
     {
+      "intent": "computer.ip",
+      "utterances": [
+        "ip?",
+        "ip address?",
+        "what is your ip?",
+        "what's your ip address?"
+      ],
+      "answers": [
+        "I believe @ip is my current address.",
+        "Some might say @ip but Amazon refuses to deliver my packages...",
+        "It might be @ip perhaps, but it's all relative, isn't it?"
+      ]
+    },
+    {
       "intent": "computer.list",
       "utterances": [
         "please list computers"

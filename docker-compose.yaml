@@ -13,6 +13,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASSWORD}'
   nodejs:
     container_name: nodejs
+    network_mode: host
     depends_on:
       - database
     restart: unless-stopped

@@ -2,7 +2,7 @@ import { Collection, Db, MongoClient } from 'mongodb';
 import { mongoPassword, mongoUsername } from './env';
 
 const client = new MongoClient(
-  `mongodb://${mongoUsername}:${mongoPassword}@mongo:27017`
+  `mongodb://${mongoUsername}:${mongoPassword}@127.0.0.1:27017`
 );
 let db: Db;
 let addresses: Collection;

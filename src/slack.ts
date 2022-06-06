@@ -7,6 +7,7 @@ import {
   setComputer,
 } from './db';
 import { appToken, signingSecret, token } from './env';
+import { getLocalIP } from './ip';
 import { parseMessage, startParser } from './parsing';
 
 const app = new App({
@@ -39,9 +40,10 @@ app.event('app_mention', async ({ event, context, client, say }) => {
 async function handleMessage(message: string, say: SayFn) {
   const parts = message.split(' ');
   const response = await parseMessage(message);
-  await say(response.answer);
+
   switch (response.intent) {
     case 'agent.canyouhelp':
+      await say(response.answer);
       await say(
         'Here are some helpful commands:\n\n' +
           [
@@ -52,15 +54,27 @@ async function handleMessage(message: string, say: SayFn) {
           ].join('\n')
       );
       break;
+    case 'computer.ip':
+      const ip = getLocalIP();
+      if (ip) {
+        await say(response.answer.replace('@ip', ip));
+      } else {
+        await say(
+          "I couldn't not find the ip address for this computer! How strange..."
+        );
+      }
+      break;
     case 'computer.power':
       const macAddress = await findMacAddress(response.entities?.[0]?.option);
       if (macAddress) {
+        await say(response.answer);
         await turnOn(macAddress);
       } else {
-        await say('Could not find a mac address for that computer!');
+        await say("I couldn't not find a mac address for that computer!");
       }
       break;
     case 'computer.list':
+      await say(response.answer);
       await say(
         '```' + JSON.stringify(await findComputers(), null, '\t') + '```'
       );
@@ -68,11 +82,13 @@ async function handleMessage(message: string, say: SayFn) {
     case 'computer.set':
       const name = parts[3];
       const mac = parts[4];
+      await say(response.answer);
       await setComputer(name, mac);
       await startParser();
       break;
     case 'computer.remove':
       const computer = parts[3];
+      await say(response.answer);
       await removeComputer(computer);
       await startParser();
       break;
