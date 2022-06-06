@@ -14,7 +14,7 @@ services:
   nodejs:
     container_name: nodejs
     depends_on:
-      - mongodb
+      - database
     restart: unless-stopped
     build:
       context: ./
