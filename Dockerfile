@@ -1,4 +1,4 @@
-FROM node:14.19.1 AS dependencies
+FROM node:14-alpine AS dependencies
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
